@@ -35,8 +35,9 @@
     </tbody>
 </table>
 <script>
+    // D3 选集上的nodes() 可以获得原始DOM元素
     let trSelection = d3.selectAll("tr"); // D3 选集
-    let headerElement = trSelection.nodes()[0];  // 原始DOMy元素
+    let headerElement = trSelection.nodes()[0];  // 原始DOM元素
     console.log("headerElement is an instance of DOM Element: "
         + (headerElement instanceof Element));
 
