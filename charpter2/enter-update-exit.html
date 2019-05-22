@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>框架</title>
+    <!--引入link单标签   href-->
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+<body>
+<script>
+    let data = [10, 15, 30, 50, 80, 65, 55, 30, 20, 10, 8];
+
+    function render(data) {
+        let bars = d3.select("body").selectAll("div.h-bar") // 选集---图形
+            .data(data); // 参数data---数据  data(data)--update
+
+        // Enter 第一次enter是数组内的所有元素
+        bars.enter()
+            .append("div")  // 为enter中的每一个数据都创建一个div元素
+            .attr("class", "h-bar")
+            .merge(bars) // Enter + Update
+            .style("width", d => (d * 3) + "px")
+            .text((d) => d);
+
+        // Exit
+        bars.exit()
+            .remove();
+    }
+
+    setInterval(() => {
+        data.shift();
+        data.push(Math.round(Math.random() * 100));
+        render(data);
+    }, 1500);
+    render(data);
+</script>
+</body>
+</html>
