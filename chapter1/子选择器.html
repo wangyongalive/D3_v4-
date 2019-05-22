@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>框架</title>
+    <!--引入link单标签   href-->
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+<body>
+<!--overflow:hidden解决高度塌陷-->
+<section id="section1" style="overflow:hidden">
+    <div>
+        <p>
+            blue box
+        </p>
+    </div>
+</section>
+<section id="section2" style="overflow:hidden">
+    <div>
+        <p>
+            red box
+        </p>
+    </div>
+</section>
+<script>
+    // 方法1: 通过css3
+    d3.select('#section1 > div')
+        .attr('class', 'blue box');
+
+    // 方法2 两次调用select
+    d3.select('#section2')
+        .select('div')
+        .attr('class', 'red box');
+</script>
+</body>
+</html>
