@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选择多个元素</title>
+    <!--引入link单标签   href-->
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<script>
+    d3.selectAll('div')   // 返回的是选集对象
+        .attr('class', 'red box') // 设置class属性
+        .each(function (d, i) {  // 迭代函数
+            // d3.select(this).append('h1') // 返回一个新添加元素的选集
+            return d3.select(this).append('h1').text(i);
+        })
+</script>
+</body>
+</html>
