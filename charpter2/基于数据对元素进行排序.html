@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>框架</title>
+    <!--引入link单标签   href-->
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+    let data = [ // <-A
+        {expense: 10, category: "Retail"},
+        {expense: 15, category: "Gas"},
+        {expense: 30, category: "Retail"},
+        {expense: 50, category: "Dining"},
+        {expense: 80, category: "Gas"},
+        {expense: 65, category: "Retail"},
+        {expense: 55, category: "Gas"},
+        {expense: 30, category: "Dining"},
+        {expense: 20, category: "Retail"},
+        {expense: 10, category: "Dining"},
+        {expense: 8, category: "Gas"}
+    ];
+
+    function render(data, comparator) {
+        let bars = d3.select("body").selectAll("div.h-bar")
+            .data(data);
+
+        // Enter
+        bars.enter().append("div")
+            .attr("class", "h-bar")
+            .append("span");
+
+        // 更新
+        d3.selectAll("div.h-bar")
+            .style("width", d => (d.expense * 5) + "px")
+            .select("span") // 子选择器
+            .text(d => d.category);
+
+        // 基于数据对文档中的元素进行排序
+        if (comparator)
+            bars.sort(comparator)
+    }
+
+    let compareByExpense = (a, b) => a.expense < b.expense ? -1 : 1;
+    let compareByCategory = (a, b) => a.category < b.category ? -1 : 1;
+    render(data);
+
+    function sort(comparator) {
+        render(data, comparator);
+    }
+</script>
+
+<div class="control-group">
+    <button onclick="sort(compareByExpense)">
+        Sort by Expense
+    </button>
+    <button onclick="sort(compareByCategory)">
+        Sort by Category
+    </button>
+    <button onclick="sort()">
+        Reset
+    </button>
+</div>
+</body>
+</html>
