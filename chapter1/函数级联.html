@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数级联</title>
+    <!--引入link单标签   href-->
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+<body>
+<script>
+    // 通过动态生成html
+    let body = d3.select('body');
+    body.append('section')
+        .attr('id', 'section1')
+        // .attr('overflow', 'hidden') // 无效
+        .style('overflow', 'hidden')
+        .append('div')
+        .attr('class', 'blue box')
+        .append('p')
+        .text('dynamic blue box');
+
+    body.append('section')
+        .attr('id', 'section2')
+        // .attr('overflow', 'hidden')  // 无效
+        .style('overflow', 'hidden')
+        .append('div')
+        .attr('class', 'red box')
+        .append('p')
+        .text('dynamic red box')
+</script>
+</body>
+</html>
