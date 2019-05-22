@@ -1,0 +1,14 @@
+# tmp files
+*.log
+*~
+
+# local files
+node_modules
+
+# ide files
+*.iml
+.idea
+
+# vim files
+.*.swp
+d3-cookbook-v2-master

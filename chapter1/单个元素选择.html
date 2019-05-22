@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单个元素选择</title>
+    <!--引入link单标签   href-->
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+<body>
+<p id="target"></p>
+<script>
+    // d3为我们提供了高效简洁的选择器
+    // 对选集可以使用级联修饰函数对该选集的属性、内容以及HTML进行操作
+    d3.select('p#target')
+        .text('hello world');
+
+    // attr
+    d3.select('p')
+        .attr('foo', 'goo'); // 给p元素设置一个foo属性
+    d3.select('p')
+        .attr('foo');  // 获得foo属性值
+
+    // classed
+    d3.select('p')
+        .classed('foo');  // 用于判断是否有goo类
+    d3.select('p')
+        .classed('goo', true); // 添加goo类
+    d3.select('p')
+        .classed('goo', () => false); // 可以通过函数来判断是否添加或者移除class
+
+    // style
+    d3.select('p')
+        .style('font-size');  // 获取样式 字体大小 16px 有单位
+    d3.select('p')
+        .style('font-size', '10px');  // 设置字体大小
+    d3.select('p')
+        .style('font-size', function () {
+            return parseFloat(d3.select(this).style('font-size')) + 10 + 'px';
+        });  // 通过函数  设置字体大小
+
+    // text
+    d3.select('p')
+        .text(); // 获取文本
+    d3.select('p')
+        .text('Hello'); // 设置文本
+    d3.select('p')  // 通过函数设置文本
+        .text(function () {
+            return Date();
+        })
+
+    // html
+    d3.select('p')
+        .html(); // 获取inner html content
+    d3.select('p')
+        .html('<b>Hello</b>'); // 设置inner html
+    d3.select('p').html(function () {
+        return d3.select(this).text() + " <span style='color:blue'> D3.js</span>"
+    })
+</script>
+</body>
+</html>
