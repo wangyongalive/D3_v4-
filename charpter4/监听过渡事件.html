@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Transition Events</title>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+    let body = d3.select("body"), duration = 3000;
+
+    body.append("div")
+        .classed("box", true)
+        .style("background-color", "steelblue")
+        .style("color", "white")
+        .text("waiting")
+        .transition().duration(duration)
+        .delay(1000)
+        .on("start", function () { //  添加或移除过渡事件句柄
+            d3.select(this).text((d, i) => "transitioning")
+        })
+        .on("end", function () {
+            d3.select(this).text((d, i) => "done")
+        })
+        .style("margin-left", "600px");
+</script>
+
+</body>
+
+</html>
