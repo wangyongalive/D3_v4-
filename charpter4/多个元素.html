@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多个元素</title>
+    <!--引入link单标签   href-->
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    let id = 0,
+        data = [],
+        duration = 500,
+        chartHeight = 100,
+        chartWidth = 680;
+
+    for (let i = 0; i < 20; i++) push(data);
+
+
+    function render(data) {
+        let selection = d3.select("body")
+            .selectAll("div.v-bar")
+            .data(data, d => d.id); //
+
+        // enter
+        // enter部分虽然加入了DOM 但是 update 部分并不会立刻更新 需要重新调用一次selection.data(data)
+        selection.enter()
+            .append("div")
+            .attr("class", "v-bar")
+            .style("z-index", "0")
+            .style("position", "fixed")
+            .style("top", chartHeight + "px")
+            .style("left", function (d, i) {
+                return barLeft(i + 1) + "px"; // <-B
+            })
+            .style("height", "0px") // <-C
+            .append("span");
+
+        // update
+        // 数据和DOM已经绑定的部分
+        selection
+            .transition().duration(duration) // <-D
+            .style("top", function (d) {
+                return chartHeight - barHeight(d) + "px";
+            })
+            .style("left", function (d, i) {
+                return barLeft(i) + "px";
+            })
+            .style("height", function (d) {
+                return barHeight(d) + "px";
+            })
+            .select("span")
+            .text(function (d) {
+                return d.value;
+            });
+
+
+        // exit
+        //  selection.exit()也会返回一个选集 对该选集使用过渡
+        selection.exit()
+            .transition().duration(duration) // <-E
+            .style("left", function (d, i) {
+                return barLeft(-1) + "px"; //<-F
+            })
+            .remove(); // <-G
+    }
+
+    function push(data) {
+        data.push({
+            id: ++id,
+            value: Math.round(Math.random() * chartHeight)
+        });
+    }
+
+    function barLeft(i) {
+        return i * (30 + 2);
+    }
+
+    //
+    function barHeight(d) {
+        return d.value;
+    }
+
+    setInterval(function () {
+        data.shift();
+        push(data);
+        render(data);
+    }, 2000);
+
+    render(data);
+
+    // 下方的基线  是一个div
+    d3.select("body")
+        .append("div")
+        .attr("class", "baseline")
+        .style("position", "fixed")
+        .style("z-index", "1")
+        .style("top", chartHeight + "px")
+        .style("left", "0px")
+        .style("width", chartWidth + "px");
+</script>
+
+
+</body>
+</html>
