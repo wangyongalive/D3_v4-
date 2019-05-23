@@ -15,7 +15,7 @@
 
         bars.enter().append("div")
             .attr("class", "h-bar")
-            .style("width", (d) => d.number + "px")
+            .style("width", d => d.number + "px")
             .append("span")
             .text((d) => d.number);
     }
