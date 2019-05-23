@@ -34,7 +34,7 @@
 
         // d3会为每一个刻度中的g都添加一个tick类
         d3.selectAll("g.x-axis g.tick") // 子选集
-            .append("line") // 添加直线
+            .append("线条生成器.html") // 添加直线
             .classed("grid-line", true) // 添加类
             .attr("x1", 0) // g标签有自己的一个坐标系
             .attr("y1", 0)
@@ -57,7 +57,7 @@
             .call(yAxis);
 
         d3.selectAll("g.y-axis g.tick")
-            .append("line")
+            .append("线条生成器.html")
             .classed("grid-line", true)
             .attr("x1", 0)
             .attr("y1", 0)

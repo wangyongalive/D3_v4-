@@ -73,11 +73,11 @@
 
     function renderXGridlines() {
         d3.selectAll("g.x-axis g.tick")
-            .select("line.grid-line")
+            .select("线条生成器.html.grid-line")
             .remove(); // 删除之前的线条
 
         d3.selectAll("g.x-axis g.tick") // 重新添加线条
-            .append("line")
+            .append("线条生成器.html")
             .classed("grid-line", true)
             .attr("x1", 0)
             .attr("y1", 0)
@@ -87,10 +87,10 @@
 
     function renderYGridlines() {
         d3.selectAll("g.y-axis g.tick")
-            .select("line.grid-line").remove();
+            .select("线条生成器.html.grid-line").remove();
 
         d3.selectAll("g.y-axis g.tick")
-            .append("line")
+            .append("线条生成器.html")
             .classed("grid-line", true)
             .attr("x1", 0)
             .attr("y1", 0)
