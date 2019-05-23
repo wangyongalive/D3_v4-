@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基础比例尺</title>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+<body>
+<div class="control-group">
+    <button onclick="renderAll(d3.axisBottom)">horizontal bottom</button>
+    <button onclick="renderAll(d3.axisTop)">horizontal top</button>
+    <button onclick="renderAll(d3.axisLeft)">vertical left</button>
+    <button onclick="renderAll(d3.axisRight)">vertical right</button>
+</div>
+<script>
+    let width = 500,
+        height = 500,
+        padding = {top: 50, bottom: 50, left: 25, right: 25},
+        axisWidth = width - padding.left - padding.right, svg;
+
+    function renderAxis(fn, scale, i) {
+        // axis坐标轴
+        let axis = fn()
+            .scale(scale) // 比例尺
+            .ticks(5);
+        // 向svg中加入g元素
+        svg.append("g")
+            .attr("transform", () => {
+                if ([d3.axisTop, d3.axisBottom].includes(fn))
+                    return `translate(${padding.left},${i * padding.bottom})`;
+                else
+                    return `translate(${i * padding.bottom},${padding.left})`;
+            })
+            .call(axis);
+    }
+
+    function createSvg() {
+        svg = d3.select("body").append("svg")
+            .attr("class", "axis")
+            .attr("width", width)
+            .attr("height", height);
+    }
+
+    function renderAll(fn) {
+        if (svg) svg.remove();
+        createSvg();
+        renderAxis(fn, d3.scaleLinear()
+            .domain([0, 1000])
+            .range([0, axisWidth]), 1);
+        renderAxis(fn, d3.scalePow()
+            .exponent(2)
+            .domain([0, 1000])
+            .range([0, axisWidth]), 2);
+        renderAxis(fn, d3.scaleTime()
+            .domain([new Date(2016, 0, 1), new Date(2017, 0, 1)])
+            .range([0, axisWidth]), 3);
+    }
+</script>
+</body>
+</html>
