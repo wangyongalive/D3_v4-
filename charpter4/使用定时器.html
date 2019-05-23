@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>使用定时器</title>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+<body>
+
+<script type="text/javascript">
+    let body = d3.select("body");
+    let countdown = body.append("div").append("input");
+    countdown.attr("type", "button")
+        .attr("class", "countdown")
+        .attr("value", "0");
+
+    // 自定义动画 d3.time
+    function countUp(target) {
+        let t = d3.timer(function () {
+            let value = countdown.attr("value");
+            if (value == target) {
+                t.stop(); // 停止定时器
+                return true;
+            }
+            countdown.attr("value", ++value);
+        });
+    }
+
+    function reset() {
+        countdown.attr("value", 0);
+    }
+</script>
+
+<div class="control-group">
+    <button onclick="countUp(100)">
+        Start
+    </button>
+    <button onclick="reset()">
+        Clear
+    </button>
+</div>
+
+</body>
+
+</html>
