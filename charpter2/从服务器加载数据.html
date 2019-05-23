@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>从服务器加载数据</title>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<div class="control-group">
+    <button onclick="load()">从服务器载入数据</button>
+</div>
+<script>
+    function render(data) {
+        // 这里如果没有先选择chart的话  会把div 添加到 chart外面去
+        // .h-bar里面添加了 颜色 字体 对齐方式
+        let bars = d3.select('#chart').selectAll('div.h-bar')
+            .data(data);
+        bars.enter().append("div")
+            .attr('class', 'h-bar')
+            .style('width', d => d.expense * 5 + 'px')
+            .append('span')
+            .text(d => d.category);
+    }
+
+    function load() {
+        d3.json('data.json', (err, data) => {
+            if (err)
+                return;
+            render(data);
+        })
+    }
+</script>
+</body>
+</html>

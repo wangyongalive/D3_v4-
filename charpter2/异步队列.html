@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步队列</title>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <script src="../node_modules/d3/build/d3.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<script>
+    function render(data) {
+        let bars = d3.select("#chart").selectAll("div.h-bar")
+            .data(data);
+
+        bars.enter().append("div")
+            .attr("class", "h-bar")
+            .style("width", (d) => d.number + "px")
+            .append("span")
+            .text((d) => d.number);
+    }
+
+    function generateDatum(callback) {
+        setInterval(function () {
+            // 回调函数有两个参数 error和result
+            callback(null, {number: Math.ceil(Math.random() * 500)});
+        }, 500);
+    }
+
+    function load() {
+        let q = d3.queue(); // 实例化d3队列
+        for (let i = 0; i < 10; i++)
+            q.defer(generateDatum); // 注册任务
+
+        // 等待所有任务执行完成后 再执行回调函数
+        q.awaitAll((error, data) => {
+            render(data);
+        });
+    }
+</script>
+<div class="control-group">
+    <button onclick="load()">生成随机数据</button>
+</div>
+</body>
+</html>
